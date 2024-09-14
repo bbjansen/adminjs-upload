@@ -31,6 +31,10 @@ export type AWSOptions = {
    */
   bucket: string;
   /**
+   * S3 Endpoint where files will be stored
+   */
+  endpoint?: string;
+  /**
    * indicates how long links should be available after page load (in minutes).
    * Default to 24h. If set to 0 adapter will mark uploaded files as PUBLIC ACL.
    */
@@ -68,6 +72,8 @@ export class AWSProvider extends BaseProvider {
       Bucket: this.bucket,
       Key: key,
       Body: tmpFile,
+      ContentLength: file.size,
+      ContentType: file.type,
     }
     if (!this.expires) {
       params.ACL = 'public-read'
